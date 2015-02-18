@@ -1,4 +1,4 @@
-# Fightr
+# Gathrr
 Tinder for magic the gathering duels and definitely NOT fighting
 
 DB CONNECTION STRING
