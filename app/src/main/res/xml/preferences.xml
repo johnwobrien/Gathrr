@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference android:title="@string/weight"
+        android:key="weight"
+        android:summary="Please provide weight"></EditTextPreference>
+    <ListPreference android:title="@string/gender"
+        android:summary="Select your gender"
+        android:key="gender"
+        android:defaultValue="Male"
+        android:entries="@array/genderArray"
+        android:entryValues="@array/genderValues" />
+</PreferenceScreen>
