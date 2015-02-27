@@ -2,8 +2,12 @@
     <string name="app_name">Gathrr</string>
 
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+
+    <string name="action_settings">Preferences</string>
+    <string name="action_history">Fight History</string>
 
     <string name="fight">Fight!</string>
     <string name="dont_fight">Don\'t Fight</string>
+    <string name="weight">Weight</string>
+    <string name="gender">Gender</string>
 </resources>
