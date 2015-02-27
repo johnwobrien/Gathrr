@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:weightSum="1"
+    android:gravity="center" tools:context=".MainActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@mipmap/ic_launcher"
+        android:layout_weight="0.73" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Would you like to fight this person?"
+        android:id="@+id/textView" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:weightSum="1"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:text="@string/dont_fight"
+            android:id="@+id/btnDontFight"
+            android:layout_weight="0.25"
+            android:onClick="denyFight"
+            android:width="50dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:text="@string/fight"
+            android:id="@+id/btnFight"
+            android:layout_weight="0.25"
+            android:onClick="acceptFight" />
+    </LinearLayout>
+
+</LinearLayout>
