@@ -5,18 +5,22 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.net.Uri;
 
 /**
  * Created by Andrew on 2/25/2015.
  */
 public class BrowseActivity extends ActionBarActivity {
 
+    ImageView fighterImage;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        fighterImage = (ImageView) findViewById(R.id.fighterImage);
         setContentView(R.layout.browse);
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -62,7 +66,10 @@ public class BrowseActivity extends ActionBarActivity {
 
     public void nextFighter()
     {
-
+        // These didn't work. Not sure where to check logs for why... -EJ
+        //Uri u = Uri.parse("https://placekitten.com/g/200/300");
+        //fighterImage.setImageURI(u);
+        //fighterImage.setImageResource(R.mipmap.ic_launcher);
     }
 
     public void addToViewed()
