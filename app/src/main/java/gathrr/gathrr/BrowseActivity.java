@@ -1,13 +1,14 @@
 package gathrr.gathrr;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
-import FightrConnection.FightrDBClient;
-
 import android.net.Uri;
 
 /**
@@ -16,14 +17,13 @@ import android.net.Uri;
 public class BrowseActivity extends ActionBarActivity {
 
     ImageView fighterImage;
-    FightrDBClient client = new FightrDBClient();
-    String userId = "testuser21";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         fighterImage = (ImageView) findViewById(R.id.fighterImage);
         setContentView(R.layout.browse);
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
     }
 
     @Override
@@ -38,14 +38,17 @@ public class BrowseActivity extends ActionBarActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                Log.d("menu", "preferences");
+                startActivity(new Intent(this, AppPreferences.class));
+                return true;
+            case R.id.action_history:
+                Log.d("menu","fight history");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public void acceptFight(View view)
@@ -70,9 +73,10 @@ public class BrowseActivity extends ActionBarActivity {
 
     public void nextFighter()
     {
-
-        //DBObject firstSeen = client.getAllNotSeen(userId).get(0);
-        //if(firstSeen)
+        // These didn't work. Not sure where to check logs for why... -EJ
+        //Uri u = Uri.parse("https://placekitten.com/g/200/300");
+        //fighterImage.setImageURI(u);
+        //fighterImage.setImageResource(R.mipmap.ic_launcher);
     }
 
     public void addToViewed()
