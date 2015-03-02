@@ -4,13 +4,12 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
-    android:gravity="center" tools:context=".MainActivity">
+    android:gravity="center" tools:context=".BrowseActivity">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/fighterImage"
-        android:src="@mipmap/sam"
         android:layout_weight="0.73" />
 
     <TextView
