@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import FightrConnection.FightrDBClient;
+
 import android.net.Uri;
 
 /**
@@ -14,6 +16,8 @@ import android.net.Uri;
 public class BrowseActivity extends ActionBarActivity {
 
     ImageView fighterImage;
+    FightrDBClient client = new FightrDBClient();
+    String userId = "testuser21";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,10 +70,9 @@ public class BrowseActivity extends ActionBarActivity {
 
     public void nextFighter()
     {
-        // These didn't work. Not sure where to check logs for why... -EJ
-        //Uri u = Uri.parse("https://placekitten.com/g/200/300");
-        //fighterImage.setImageURI(u);
-        //fighterImage.setImageResource(R.mipmap.ic_launcher);
+
+        //DBObject firstSeen = client.getAllNotSeen(userId).get(0);
+        //if(firstSeen)
     }
 
     public void addToViewed()
