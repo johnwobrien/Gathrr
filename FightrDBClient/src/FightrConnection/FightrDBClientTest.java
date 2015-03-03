@@ -32,4 +32,13 @@ public class FightrDBClientTest {
 		//response = client.getUser(userID);
 		//assert(response==null);
 	} 
+	
+	@Test
+	public void testSeed()
+	{
+		DatabaseSeed.Seed();
+		client.printAllUsers();
+		
+		assert(true);
+	}
 }

@@ -19,16 +19,16 @@ import android.net.Uri;
 public class BrowseActivity extends ActionBarActivity {
 
     ImageView fighterImage;
-    String userId = "1";
+    String userId = "user0";
     FightrDBClient client = new FightrDBClient();
     HashMap<String, Object> fighter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fighterImage = (ImageView) findViewById(R.id.fighterImage);
         setContentView(R.layout.browse);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        fighterImage = (ImageView) findViewById(R.id.fighterImage);
         nextFighter();
     }
 

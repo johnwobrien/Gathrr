@@ -74,17 +74,7 @@ public class FightrDBClient {
 	
 	public DBObject getUserDB(String id){
 		id = sanitizeID(id);
-		BasicDBObject query = new BasicDBObject("id", id);
-		DBCursor cursor = userCollection.find(query);
-		try {
-			if(cursor.hasNext()) {
-				return cursor.next();
-			}
-		} 
-		finally {
-			cursor.close();
-		}
-		return null;
+		return userCollection.findOne(id);
 	}
 	
 	public void updateUser(String id, String name, double weight, String sex, String linkToPicture,ArrayList<Object> history,HashMap<String,Long> fightersSeen){
@@ -155,4 +145,15 @@ public class FightrDBClient {
 		userCollection.remove(document);
 	}
 	
+	public void printAllUsers()
+	{
+		DBCursor cursor = userCollection.find();
+		try {
+		   while(cursor.hasNext()) {
+		       System.out.println(cursor.next());
+		   }
+		} finally {
+		   cursor.close();
+		}
+	}
 }
