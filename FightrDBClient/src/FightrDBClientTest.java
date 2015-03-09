@@ -3,6 +3,8 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
+import FightrConnection.FightrDBClient;
+
 import com.mongodb.DBObject;
 
 public class FightrDBClientTest {
