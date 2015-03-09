@@ -29,12 +29,12 @@ public class FightrDBClientTest {
 		client.addSeen(userID, "coolguy69");
 		client.addSeen(userID, "randygoodman1");
 		
-		//client.deleteUser(userID);
+		client.deleteUser(userID);
 		
-		//response = client.getUser(userID);
-		//assert(response==null);
+		response = client.getUserDB(userID);
+		assert(response==null);
 	} 
-	/*
+	
 	@Test
 	public void testSeed()
 	{
@@ -43,5 +43,5 @@ public class FightrDBClientTest {
 		
 		assert(true);
 	}
-	*/
+	
 }
