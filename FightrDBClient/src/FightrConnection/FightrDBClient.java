@@ -20,14 +20,14 @@ public class FightrDBClient {
 	private DBCollection userCollection;
 	
 	public FightrDBClient(){
-		MongoCredential credentials = MongoCredential.createCredential("fightr-user", "fightrdb", "fightr-password".toCharArray());
+		MongoCredential credentials = MongoCredential.createCredential("fightr-user", "gathrr", "fightr-password".toCharArray());
 		List<MongoCredential> credList = new ArrayList<MongoCredential>();
 		credList.add(credentials);
-		ServerAddress sa = new ServerAddress("ds045531.mongolab.com",45531);
+		ServerAddress sa = new ServerAddress("ds031631.mongolab.com",31631);
 		mongoClient = new MongoClient(sa,credList);
 		
 		
-		fightrDB = mongoClient.getDB("fightrdb");
+		fightrDB = mongoClient.getDB("gathrr");
 		
 		userCollection = fightrDB.getCollectionFromString("users");
 	}
@@ -74,7 +74,17 @@ public class FightrDBClient {
 	
 	public DBObject getUserDB(String id){
 		id = sanitizeID(id);
-		return userCollection.findOne(id);
+		BasicDBObject query = new BasicDBObject("id", id);
+		DBCursor cursor = userCollection.find(query);
+		try {
+			if(cursor.hasNext()) {
+				return cursor.next();
+			}
+		} 
+		finally {
+			cursor.close();
+		}
+		return null;
 	}
 	
 	public void updateUser(String id, String name, double weight, String sex, String linkToPicture,ArrayList<Object> history,HashMap<String,Long> fightersSeen){

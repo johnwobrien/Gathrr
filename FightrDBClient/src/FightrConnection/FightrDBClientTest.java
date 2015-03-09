@@ -12,7 +12,7 @@ public class FightrDBClientTest {
 	FightrDBClient client = new FightrDBClient();
 	
 	@Test
-	public void addGetUpdateRemoveUserTest() {
+	public void createGetUpdateRemoveUserTest() {
 		String linkToPicture = "https://fbcdn-sphotos-f-a.akamaihd.net/hphotos-ak-xpa1/t31.0-8/q86/s960x960/886447_10201000978705929_1311356310_o.jpg";
 		String userID = "test.user21";
 		
@@ -34,7 +34,7 @@ public class FightrDBClientTest {
 		//response = client.getUser(userID);
 		//assert(response==null);
 	} 
-	
+	/*
 	@Test
 	public void testSeed()
 	{
@@ -43,4 +43,5 @@ public class FightrDBClientTest {
 		
 		assert(true);
 	}
+	*/
 }
