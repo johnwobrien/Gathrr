@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ImageView;
+import FightrConnection.FightrDBClient;
+import java.util.HashMap;
 import android.net.Uri;
 
 /**
@@ -17,13 +19,17 @@ import android.net.Uri;
 public class BrowseActivity extends ActionBarActivity {
 
     ImageView fighterImage;
+    String userId = "user0";
+    FightrDBClient client = new FightrDBClient();
+    HashMap<String, Object> fighter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        fighterImage = (ImageView) findViewById(R.id.fighterImage);
         setContentView(R.layout.browse);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        fighterImage = (ImageView) findViewById(R.id.fighterImage);
+        nextFighter();
     }
 
     @Override
@@ -71,16 +77,21 @@ public class BrowseActivity extends ActionBarActivity {
         nextFighter();
     }
 
-    public void nextFighter()
+    private void nextFighter()
     {
-        // These didn't work. Not sure where to check logs for why... -EJ
-        //Uri u = Uri.parse("https://placekitten.com/g/200/300");
-        //fighterImage.setImageURI(u);
-        //fighterImage.setImageResource(R.mipmap.ic_launcher);
+        fighter = client.getAllNotSeen(userId).get(0);
+        String src = fighter.get("picture").toString();
+        setFighterImage(src);
     }
 
-    public void addToViewed()
+    private void addToViewed()
     {
+        client.addSeen(userId, fighter.get("id").toString());
+    }
 
+    private void setFighterImage(String src)
+    {
+        ImageView imgView = (ImageView) findViewById(R.id.fighterImage);
+        imgView.setImageURI(Uri.parse(src));
     }
 }

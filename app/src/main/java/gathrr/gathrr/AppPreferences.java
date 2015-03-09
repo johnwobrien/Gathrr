@@ -27,10 +27,11 @@ public class AppPreferences extends PreferenceActivity {
         String weight = "123";
         String gender = "Other";
 
-
         p.putString("weight", weight);
         p.putString("gender",gender);
         p.commit();
     }
+
+
 
 }

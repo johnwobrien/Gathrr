@@ -1,5 +1,4 @@
 package FightrConnection;
-
 import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
@@ -68,13 +67,19 @@ public class FightrDBClient {
 		userCollection.insert(new BasicDBObject(documentMap));
 	}
 	
-	public HashMap<String, Object> getUser(String id){
-		return (HashMap<String, Object>)getUserDB(id).toMap();
-	}
-	
-	public DBObject getUserDB(String id){
+	public HashMap<String,Object> getUser(String id){
 		id = sanitizeID(id);
-		return userCollection.findOne(id);
+		BasicDBObject query = new BasicDBObject("id", id);
+		DBCursor cursor = userCollection.find(query);
+		try {
+			if(cursor.hasNext()) {
+				return (HashMap<String,Object>)cursor.next().toMap();
+			}
+		} 
+		finally {
+			cursor.close();
+		}
+		return null;
 	}
 	
 	public void updateUser(String id, String name, double weight, String sex, String linkToPicture,ArrayList<Object> history,HashMap<String,Long> fightersSeen){
@@ -105,7 +110,7 @@ public class FightrDBClient {
 		id = sanitizeID(id);
 		idSeen = sanitizeID(idSeen);
 		
-		DBObject curUser = getUserDB(id);
+		HashMap<String,Object> curUser = getUser(id);
 		
 		HashMap<String,Long> fightersSeen = ((HashMap<String,Long>)curUser.get("fighters-seen"));
 		fightersSeen.put(idSeen,(Long)System.currentTimeMillis());
@@ -113,23 +118,23 @@ public class FightrDBClient {
 		updateUser(id,(String)curUser.get("name"),(Double)curUser.get("weight"),(String)curUser.get("sex"),(String)curUser.get("picture"),(ArrayList<Object>)curUser.get("history"),fightersSeen);
 	}
 	
-	public ArrayList<HashMap<String, Object>> getAllNotSeen(String id){
+	public ArrayList<DBObject> getAllNotSeen(String id){
 		id = sanitizeID(id);
 		
-		DBObject user = getUserDB(id);
+		HashMap<String,Object> user = getUser(id);
 		HashMap<String,Long> seen = (HashMap<String,Long>)user.get("fighters-seen");
 		String sex = (String)user.get("sex");
 		
 		BasicDBObject query = new BasicDBObject("sex", sex);
 		
-		ArrayList<HashMap<String, Object>> response = new ArrayList<HashMap<String, Object>>();
+		ArrayList<DBObject> response = new ArrayList<DBObject>();
 		DBCursor cursor = userCollection.find(query);
 		
 		try {
 		    while (cursor.hasNext()) {
 		        DBObject item = cursor.next();
 		        if(id!=item.get("id") && !seen.containsKey(item.get("id"))){
-		        	response.add((HashMap<String, Object>)item.toMap());
+		        	response.add(item);
 		        }
 		    }
 		} finally {
@@ -140,20 +145,8 @@ public class FightrDBClient {
 	}
 	
 	public void deleteUser(String id){
-		id = sanitizeID(id);
-		DBObject document = getUserDB(id);
-		userCollection.remove(document);
+		BasicDBObject query = new BasicDBObject("id", id);
+		userCollection.remove(query);
 	}
 	
-	public void printAllUsers()
-	{
-		DBCursor cursor = userCollection.find();
-		try {
-		   while(cursor.hasNext()) {
-		       System.out.println(cursor.next());
-		   }
-		} finally {
-		   cursor.close();
-		}
-	}
 }

@@ -1,3 +1,4 @@
+package FightrConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -17,12 +18,12 @@ public class FightrDBClientTest {
 		
 		client.addUser(userID, "John O'Brien", 245.5, "male", linkToPicture);
 		
-		DBObject response = client.getUser(userID);
+		DBObject response = client.getUserDB(userID);
 		assert(response.get("id").equals(userID));
 		
 		client.updateUser(userID, "John O'Brien", 260.0, "male", linkToPicture, new ArrayList<Object>(), new  HashMap<String,Long>());
 
-		response = client.getUser(userID);
+		response = client.getUserDB(userID);
 		assert(response.get("weight")==(Object)260.0);
 		
 		client.addSeen(userID, "coolguy69");
@@ -33,4 +34,13 @@ public class FightrDBClientTest {
 		//response = client.getUser(userID);
 		//assert(response==null);
 	} 
+	
+	@Test
+	public void testSeed()
+	{
+		DatabaseSeed.Seed();
+		client.printAllUsers();
+		
+		assert(true);
+	}
 }
