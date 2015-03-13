@@ -29,6 +29,7 @@ public class BrowseActivity extends ActionBarActivity {
     ImageView fighterImage;
     String userId = "user1";
     JSONObject fighter;
+    Drawable nextFighterImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,7 @@ public class BrowseActivity extends ActionBarActivity {
     public void acceptFight(View view)
     {
         new AcceptFight().execute();
+        fighterImage.setImageDrawable(nextFighterImage);
     }
 
     public void denyFight(View view)
@@ -97,7 +99,7 @@ public class BrowseActivity extends ActionBarActivity {
         protected Void doInBackground(Void... params)
         {
             Drawable pic = LoadImageFromWebOperations("https://placekitten.com/g/200/300");
-            fighterImage.setImageDrawable(pic);
+            nextFighterImage = pic;
             /*
             //add to viewed fighters
             String id;
