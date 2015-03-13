@@ -1,18 +1,23 @@
 package gathrr.gathrr;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
-import android.net.Uri;
-import android.os.AsyncTask;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.InputStream;
+import java.net.URL;
 
 import gathrr.utility.ApiHelper;
 
@@ -69,6 +74,17 @@ public class BrowseActivity extends ActionBarActivity {
         new DenyFight().execute();
     }
 
+    public static Drawable LoadImageFromWebOperations(String url) {
+        try {
+            InputStream is = (InputStream) new URL(url).getContent();
+            Drawable d = Drawable.createFromStream(is, "src name");
+            return d;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
+
     private void setFighterImage(String src)
     {
         ImageView imgView = (ImageView) findViewById(R.id.fighterImage);
@@ -80,6 +96,9 @@ public class BrowseActivity extends ActionBarActivity {
         @Override
         protected Void doInBackground(Void... params)
         {
+            Drawable pic = LoadImageFromWebOperations("https://placekitten.com/g/200/300");
+            fighterImage.setImageDrawable(pic);
+            /*
             //add to viewed fighters
             String id;
             try {
@@ -95,6 +114,7 @@ public class BrowseActivity extends ActionBarActivity {
 
             //present next fighter
             fighter = ApiHelper.getNextFighter(userId);
+            */
             return null;
         }
     }
