@@ -1,6 +1,8 @@
 package gathrr.gathrr;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -12,11 +14,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 import gathrr.utility.ApiHelper;
@@ -27,9 +32,11 @@ import gathrr.utility.ApiHelper;
 public class BrowseActivity extends ActionBarActivity {
 
     ImageView fighterImage;
+    TextView browseMessage;
     String userId = "user1";
     JSONObject fighter;
     Drawable nextFighterImage;
+    ImageView imgView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +44,8 @@ public class BrowseActivity extends ActionBarActivity {
         setContentView(R.layout.browse);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         fighterImage = (ImageView) findViewById(R.id.fighterImage);
+        browseMessage = (TextView) findViewById(R.id.browseMessage);
+        imgView = (ImageView) findViewById(R.id.fighterImage);
         new NextFighter().execute();
     }
 
@@ -68,7 +77,6 @@ public class BrowseActivity extends ActionBarActivity {
     public void acceptFight(View view)
     {
         new AcceptFight().execute();
-        fighterImage.setImageDrawable(nextFighterImage);
     }
 
     public void denyFight(View view)
@@ -87,10 +95,50 @@ public class BrowseActivity extends ActionBarActivity {
         }
     }
 
+    private void setMessage(JSONObject ftr)
+    {
+        String user;
+        try {
+            user = ftr.getString("id");
+        }
+        catch(JSONException ex)
+        {
+            user = "unknown";
+        }
+        browseMessage.setText("Would you like to fight " + user);
+    }
+
+    private void nextFighter()
+    {
+        fighter = ApiHelper.getNextFighter(userId);
+        setFighterImage(fighter);
+        setMessage(fighter);
+    }
+
     private void setFighterImage(String src)
     {
-        ImageView imgView = (ImageView) findViewById(R.id.fighterImage);
-        imgView.setImageURI(Uri.parse(src));
+        try {
+            URL url = new URL(src);
+            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            imgView.setImageBitmap(bmp);
+        }
+        catch(IOException ex)
+        {
+            System.err.print(ex.getStackTrace());
+        }
+    }
+
+    private void setFighterImage(JSONObject ftr)
+    {
+        String src;
+        try {
+            src = ftr.getString("picture");
+        }
+        catch(JSONException ex)
+        {
+            src = "https://placekitten.com/g/200/300";
+        }
+        setFighterImage(src);
     }
 
     private class AcceptFight extends AsyncTask<Void,Void,Void>
@@ -98,9 +146,6 @@ public class BrowseActivity extends ActionBarActivity {
         @Override
         protected Void doInBackground(Void... params)
         {
-            Drawable pic = LoadImageFromWebOperations("https://placekitten.com/g/200/300");
-            nextFighterImage = pic;
-            /*
             //add to viewed fighters
             String id;
             try {
@@ -115,8 +160,8 @@ public class BrowseActivity extends ActionBarActivity {
             //send notification to the accepted fighter
 
             //present next fighter
-            fighter = ApiHelper.getNextFighter(userId);
-            */
+            nextFighter();
+
             return null;
         }
     }
@@ -137,7 +182,8 @@ public class BrowseActivity extends ActionBarActivity {
             ApiHelper.addSeen(id);
 
             //present next fighter
-            fighter = ApiHelper.getNextFighter(userId);
+            nextFighter();
+
             return null;
         }
     }
@@ -147,7 +193,7 @@ public class BrowseActivity extends ActionBarActivity {
         protected Void doInBackground(Void... params)
         {
             //present next fighter
-            fighter = ApiHelper.getNextFighter(userId);
+            nextFighter();
 
             return null;
         }

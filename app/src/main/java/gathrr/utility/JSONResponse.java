@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import android.util.Log;
@@ -34,25 +35,43 @@ public class JSONResponse{
     public static JSONObject getJSONFromUrl(HttpType httpType, String url, List<NameValuePair> params) {
 
         //HttpRequestBase req = null;
-        HttpResponse httpResponse = null;
+        //HttpResponse httpResponse = null;
         // Making the HTTP request
         try {
-            DefaultHttpClient httpClient = new DefaultHttpClient();
-            String paramString = "";
+            //DefaultHttpClient httpClient = new DefaultHttpClient();
+            String paramString = URLEncodedUtils.format(params, "utf-8");
+            url = url + "?" + paramString;
+            URL uri = new URL(url);
+            HttpURLConnection urlConnection = (HttpURLConnection) uri.openConnection();
+
 
             switch(httpType)
             {
                 case POST:
+                    String charset = "utf-8";
+                    urlConnection.setRequestMethod("POST");
+                    urlConnection.setDoOutput(true);
+                    urlConnection.setRequestProperty("Accept-Charset", charset);
+                    urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
+
+                    try(OutputStream output = urlConnection.getOutputStream())
+                    {
+                        output.write(paramString.getBytes(charset));
+                    }
                     //req = new HttpPost(url);
                     //((HttpPost)req).setEntity(new UrlEncodedFormEntity(params));
-                    //break;
+                    break;
                 case GET:
-                    HttpGet req = new HttpGet(url);
-                    paramString = URLEncodedUtils.format(params, "utf-8");
-                    url += "?" + paramString;
-                    httpResponse = httpClient.execute(req);
+                    urlConnection.setRequestMethod("GET");
+                    urlConnection.setDoOutput(false);
+                    //req = new HttpGet(url);
+                    //paramString = URLEncodedUtils.format(params, "utf-8");
+                    //url += "?" + paramString;
+                    //httpResponse = httpClient.execute(req);
                     break;
                 case DELETE:
+                    urlConnection.setRequestMethod("DELETE");
+                    urlConnection.setDoOutput(false);
                     //req = new HttpDelete(url);
                     //paramString = URLEncodedUtils.format(params, "utf-8");
                     //url += "?" + paramString;
@@ -62,9 +81,13 @@ public class JSONResponse{
             }
             //req.setHeader("Content-Type", "text/html");
             //req.addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
+            //HttpEntity httpEntity = httpResponse.getEntity();
+            //is = httpEntity.getContent();
 
-            HttpEntity httpEntity = httpResponse.getEntity();
-            is = httpEntity.getContent();
+            urlConnection.setDoInput(true);
+            urlConnection.connect();
+
+            is = urlConnection.getInputStream();
             outPut = convertStreamToString(is);
 
         } catch (UnsupportedEncodingException e) {
