@@ -27,23 +27,16 @@ import org.apache.http.client.utils.URLEncodedUtils;
 import org.apache.http.HttpEntity;
 
 public class JSONResponse{
-
-    static InputStream is = null;
-    static JSONObject json = null;
-    static String outPut = "";
-
     public static JSONObject getJSONFromUrl(HttpType httpType, String url, List<NameValuePair> params) {
+        InputStream is = null;
+        JSONObject json = null;
+        String outPut = "";
 
-        //HttpRequestBase req = null;
-        //HttpResponse httpResponse = null;
-        // Making the HTTP request
         try {
-            //DefaultHttpClient httpClient = new DefaultHttpClient();
             String paramString = URLEncodedUtils.format(params, "utf-8");
             url = url + "?" + paramString;
             URL uri = new URL(url);
             HttpURLConnection urlConnection = (HttpURLConnection) uri.openConnection();
-
 
             switch(httpType)
             {
@@ -54,38 +47,27 @@ public class JSONResponse{
                     urlConnection.setRequestProperty("Accept-Charset", charset);
                     urlConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded;charset=" + charset);
 
-                    try(OutputStream output = urlConnection.getOutputStream())
-                    {
+                    try{
+                        OutputStream output = urlConnection.getOutputStream();
                         output.write(paramString.getBytes(charset));
                     }
-                    //req = new HttpPost(url);
-                    //((HttpPost)req).setEntity(new UrlEncodedFormEntity(params));
+                    catch(IOException ex){}
+
+                    int responseCode = urlConnection.getResponseCode();
+                    System.out.println("Response Code: " + responseCode);
+
                     break;
                 case GET:
                     urlConnection.setRequestMethod("GET");
-                    urlConnection.setDoOutput(false);
-                    //req = new HttpGet(url);
-                    //paramString = URLEncodedUtils.format(params, "utf-8");
-                    //url += "?" + paramString;
-                    //httpResponse = httpClient.execute(req);
+                    urlConnection.connect();
                     break;
                 case DELETE:
                     urlConnection.setRequestMethod("DELETE");
-                    urlConnection.setDoOutput(false);
-                    //req = new HttpDelete(url);
-                    //paramString = URLEncodedUtils.format(params, "utf-8");
-                    //url += "?" + paramString;
-                    //break;
+                    urlConnection.connect();
+                    break;
                 default:
                     return null;
             }
-            //req.setHeader("Content-Type", "text/html");
-            //req.addHeader("Accept", "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8");
-            //HttpEntity httpEntity = httpResponse.getEntity();
-            //is = httpEntity.getContent();
-
-            urlConnection.setDoInput(true);
-            urlConnection.connect();
 
             is = urlConnection.getInputStream();
             outPut = convertStreamToString(is);

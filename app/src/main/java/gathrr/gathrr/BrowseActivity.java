@@ -34,9 +34,11 @@ public class BrowseActivity extends ActionBarActivity {
     ImageView fighterImage;
     TextView browseMessage;
     String userId = "user1";
+    String fighterId;
     JSONObject fighter;
-    Drawable nextFighterImage;
     ImageView imgView;
+    Bitmap bmp;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,15 +99,21 @@ public class BrowseActivity extends ActionBarActivity {
 
     private void setMessage(JSONObject ftr)
     {
-        String user;
         try {
-            user = ftr.getString("id");
+            fighterId = ftr.getString("id");
         }
         catch(JSONException ex)
         {
-            user = "unknown";
+            fighterId = "unknown";
         }
-        browseMessage.setText("Would you like to fight " + user);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                browseMessage.setText("Would you like to fight " + fighterId);
+            }
+        });
+
     }
 
     private void nextFighter()
@@ -119,8 +127,14 @@ public class BrowseActivity extends ActionBarActivity {
     {
         try {
             URL url = new URL(src);
-            Bitmap bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            imgView.setImageBitmap(bmp);
+            bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    imgView.setImageBitmap(bmp);
+                }
+            });
         }
         catch(IOException ex)
         {
@@ -147,15 +161,15 @@ public class BrowseActivity extends ActionBarActivity {
         protected Void doInBackground(Void... params)
         {
             //add to viewed fighters
-            String id;
+            String idSeen;
             try {
-                id = fighter.getString("id");
+                idSeen = fighter.getString("id");
             }
             catch(JSONException ex)
             {
-                id = "";
+                idSeen = "";
             }
-            ApiHelper.addSeen(id);
+            ApiHelper.addSeen(userId, idSeen);
 
             //send notification to the accepted fighter
 
@@ -171,15 +185,15 @@ public class BrowseActivity extends ActionBarActivity {
         protected Void doInBackground(Void... params)
         {
             //add to viewed fighters
-            String id;
+            String idSeen;
             try {
-                id = fighter.getString("id");
+                idSeen = fighter.getString("id");
             }
             catch(JSONException ex)
             {
-                id = "";
+                idSeen = "";
             }
-            ApiHelper.addSeen(id);
+            ApiHelper.addSeen(userId, idSeen);
 
             //present next fighter
             nextFighter();

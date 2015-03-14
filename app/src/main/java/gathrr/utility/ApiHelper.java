@@ -35,10 +35,11 @@ public class ApiHelper {
         return users(id, HttpType.DELETE);
     }
 
-    public static JSONObject addSeen(String id)
+    public static JSONObject addSeen(String id, String idSeen)
     {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("id", id));
+        params.add(new BasicNameValuePair("idSeen", idSeen));
 
         String url = baseUrl + "addSeen";
         JSONObject json = JSONResponse.getJSONFromUrl(HttpType.POST, url, params);
