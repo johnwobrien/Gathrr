@@ -1,5 +1,7 @@
 package gathrr.utility;
 
+import android.util.Log;
+
 import org.json.JSONObject;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -10,6 +12,8 @@ public class ApiHelper {
 
     private static String baseUrl = "http://fightr.herokuapp.com/api/";
     //private static String baseUrl = "http://127.0.0.1:8080/api/";
+
+    private static String TAG = "ApiHelper";
 
     //The below passes the tag and the user name over to the JSON parser class
     public static JSONObject addUser(String id, String name, double weight, String sex, String picture){
@@ -48,6 +52,7 @@ public class ApiHelper {
 
     public static JSONObject getNextFighter(String id)
     {
+        Log.i(TAG, "getNextFighter for id: " + id);
         List<NameValuePair> params = new ArrayList<NameValuePair>();
         params.add(new BasicNameValuePair("id", id));
 

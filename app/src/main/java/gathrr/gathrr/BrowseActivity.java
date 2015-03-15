@@ -31,6 +31,8 @@ import gathrr.utility.ApiHelper;
  */
 public class BrowseActivity extends ActionBarActivity {
 
+    private static String TAG = "BrowseActivity";
+
     ImageView fighterImage;
     TextView browseMessage;
     String userId = "user1";
@@ -118,7 +120,12 @@ public class BrowseActivity extends ActionBarActivity {
 
     private void nextFighter()
     {
+        Log.i(TAG, "nextFighter");
         fighter = ApiHelper.getNextFighter(userId);
+        if (fighter == null) {
+            Log.e(TAG, "nextFighter got back a null fighter");
+            return;
+        }
         setFighterImage(fighter);
         setMessage(fighter);
     }
@@ -160,6 +167,7 @@ public class BrowseActivity extends ActionBarActivity {
         @Override
         protected Void doInBackground(Void... params)
         {
+            Log.i(TAG, "AcceptFight");
             //add to viewed fighters
             String idSeen;
             try {
@@ -184,6 +192,7 @@ public class BrowseActivity extends ActionBarActivity {
         @Override
         protected Void doInBackground(Void... params)
         {
+            Log.i(TAG, "DenyFight");
             //add to viewed fighters
             String idSeen;
             try {
