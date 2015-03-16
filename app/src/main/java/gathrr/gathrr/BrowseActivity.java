@@ -10,12 +10,17 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import org.apache.http.conn.ssl.BrowserCompatHostnameVerifier;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,17 +34,25 @@ import gathrr.utility.ApiHelper;
 /**
  * Created by Andrew on 2/25/2015.
  */
-public class BrowseActivity extends ActionBarActivity {
+public class BrowseActivity extends ActionBarActivity implements View.OnClickListener {
 
     private static String TAG = "BrowseActivity";
 
     ImageView fighterImage;
     TextView browseMessage;
-    String userId = "user1";
+    String userId = "user4";
     String fighterId;
     JSONObject fighter;
     ImageView imgView;
     Bitmap bmp;
+
+    // Variables for handling Gestures
+    // Reference: http://stackoverflow.com/questions/937313/android-basic-gesture-detection
+    private static final int SWIPE_MIN_DISTANCE = 120;
+    private static final int SWIPE_MAX_OFF_PATH = 250;
+    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
+    private GestureDetector gestureDetector;
+    View.OnTouchListener gestureListener;
 
 
     @Override
@@ -51,6 +64,25 @@ public class BrowseActivity extends ActionBarActivity {
         browseMessage = (TextView) findViewById(R.id.browseMessage);
         imgView = (ImageView) findViewById(R.id.fighterImage);
         new NextFighter().execute();
+
+        // Gesture detection
+        gestureDetector = new GestureDetector(this, new MyGestureDetector());
+        gestureListener = new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event);
+            }
+        };
+
+        imgView.setOnClickListener(BrowseActivity.this);
+        imgView.setOnTouchListener(gestureListener);
+    }
+
+    public void onClick(View v) {
+        Log.i(TAG, "onClick");
+        /*
+        Filter f = (Filter) v.getTag();
+        FilterFullscreenActivity.show(this, input, f);
+        */
     }
 
     @Override
@@ -219,6 +251,36 @@ public class BrowseActivity extends ActionBarActivity {
             nextFighter();
 
             return null;
+        }
+    }
+
+    class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            try {
+                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
+                    return false;
+                // right to left swipe
+                if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    Log.i(TAG, "onFlight Left");
+                    // These Toasts are here for Debug
+                    Toast.makeText(BrowseActivity.this, "Left Swipe", Toast.LENGTH_SHORT).show();
+                    new DenyFight().execute();
+                }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+                    Log.i(TAG, "onFlight Right");
+                    // These Toasts are here for Debug
+                    Toast.makeText(BrowseActivity.this, "Right Swipe", Toast.LENGTH_SHORT).show();
+                    new AcceptFight().execute();
+                }
+            } catch (Exception e) {
+                // nothing
+            }
+            return false;
+        }
+
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true;
         }
     }
 }
