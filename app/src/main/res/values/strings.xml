@@ -10,4 +10,5 @@
     <string name="dont_fight">Don\'t Fight</string>
     <string name="weight">Weight</string>
     <string name="gender">Gender</string>
+    <string name="title_activity_no_fighters">NoFightersActivity</string>
 </resources>
