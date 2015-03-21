@@ -40,7 +40,7 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
 
     ImageView fighterImage;
     TextView browseMessage;
-    String userId = "user4";
+    String userId = "user1";
     String fighterId;
     JSONObject fighter;
     ImageView imgView;
@@ -155,7 +155,9 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
         Log.i(TAG, "nextFighter");
         fighter = ApiHelper.getNextFighter(userId);
         if (fighter == null) {
-            Log.e(TAG, "nextFighter got back a null fighter");
+            finish();
+            Intent homepage = new Intent(BrowseActivity.this, NoFightersActivity.class);
+            startActivity(homepage);
             return;
         }
         setFighterImage(fighter);
