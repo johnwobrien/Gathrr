@@ -19,7 +19,7 @@ public class NoFightersActivity extends ActionBarActivity {
     int timeout = 4000; // make the activity visible for 4 seconds
     Timer timer = new Timer();
     JSONObject fighter;
-    String userId = "user1";
+    String userId = "user4";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

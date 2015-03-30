@@ -1,6 +1,7 @@
 package gathrr.gathrr;
 
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.Drawable;
@@ -15,8 +16,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +43,10 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
 
     ImageView fighterImage;
     TextView browseMessage;
-    String userId = "user1";
+    Button fight;
+    Button dontFight;
+    ProgressBar loading;
+    String userId = "user4";
     String fighterId;
     JSONObject fighter;
     ImageView imgView;
@@ -54,15 +60,21 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
     private GestureDetector gestureDetector;
     View.OnTouchListener gestureListener;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        //init
         super.onCreate(savedInstanceState);
         setContentView(R.layout.browse);
         PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
         fighterImage = (ImageView) findViewById(R.id.fighterImage);
         browseMessage = (TextView) findViewById(R.id.browseMessage);
         imgView = (ImageView) findViewById(R.id.fighterImage);
+        fight = (Button) findViewById(R.id.btnFight);
+        dontFight = (Button) findViewById(R.id.btnDontFight);
+        loading = (ProgressBar) findViewById(R.id.loading);
+
+        //load the fighter
+        loadingFighterUp();
         new NextFighter().execute();
 
         // Gesture detection
@@ -131,8 +143,31 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
         }
     }
 
-    private void setMessage(JSONObject ftr)
+    private void loadingFighterUp()
     {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                fight.setVisibility(View.INVISIBLE);
+                dontFight.setVisibility(View.INVISIBLE);
+                browseMessage.setText(R.string.loading_next_fighter);
+                imgView.setVisibility(View.INVISIBLE);
+                loading.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
+    private void loadingFighterDown(JSONObject ftr)
+    {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                fight.setVisibility(View.VISIBLE);
+                dontFight.setVisibility(View.VISIBLE);
+            }
+        });
+
+        //set message
         try {
             fighterId = ftr.getString("id");
         }
@@ -148,6 +183,15 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
             }
         });
 
+        setFighterImage(fighter);
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                loading.setVisibility(View.INVISIBLE);
+                imgView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     private void nextFighter()
@@ -160,8 +204,7 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
             startActivity(homepage);
             return;
         }
-        setFighterImage(fighter);
-        setMessage(fighter);
+        loadingFighterDown(fighter);
     }
 
     private void setFighterImage(String src)
@@ -196,11 +239,16 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
         setFighterImage(src);
     }
 
+
+    //-----------------------------background actions-----------------------------------------------
+
+
     private class AcceptFight extends AsyncTask<Void,Void,Void>
     {
         @Override
         protected Void doInBackground(Void... params)
         {
+            loadingFighterUp();
             Log.i(TAG, "AcceptFight");
             //add to viewed fighters
             String idSeen;
@@ -226,6 +274,7 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
         @Override
         protected Void doInBackground(Void... params)
         {
+            loadingFighterUp();
             Log.i(TAG, "DenyFight");
             //add to viewed fighters
             String idSeen;

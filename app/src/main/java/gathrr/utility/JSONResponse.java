@@ -80,10 +80,13 @@ public class JSONResponse{
             e.printStackTrace();
         }
 
+        if(outPut == "null")
+            return null;
+
         try {
             json = new JSONObject(outPut);
         } catch (JSONException e) {
-            Log.e("JSON Parser", "Error parsing data " + e.toString());
+            return null;
         }
 
         // return JSON String

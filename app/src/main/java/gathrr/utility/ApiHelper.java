@@ -70,6 +70,14 @@ public class ApiHelper {
         return json;
     }
 
+    public static void reseedDatabase()
+    {
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+
+        String url = baseUrl + "reseed";
+        JSONObject json = JSONResponse.getJSONFromUrl(HttpType.POST, url, params);
+    }
+
 
 
 

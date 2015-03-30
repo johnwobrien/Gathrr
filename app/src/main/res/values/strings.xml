@@ -11,4 +11,6 @@
     <string name="weight">Weight</string>
     <string name="gender">Gender</string>
     <string name="title_activity_no_fighters">NoFightersActivity</string>
+    <string name="loading_next_fighter">Loading Next Fighter...</string>
+    <string name="waiting_next_fighter">Waiting For Fighters...</string>
 </resources>

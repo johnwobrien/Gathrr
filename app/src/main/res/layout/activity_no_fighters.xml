@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:textColor= "@color/bright_foreground_inverse_material_light"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Searching For Fighters..."
+        android:text="@string/waiting_next_fighter"
         android:id="@+id/textView"
         android:layout_below="@+id/progressBar"
         android:layout_centerHorizontal="true"

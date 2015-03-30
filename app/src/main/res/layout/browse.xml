@@ -1,17 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
     android:background= "@mipmap/background2"
-    android:gravity="center" tools:context=".BrowseActivity">
+    tools:context=".BrowseActivity">
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/fighterImage"
-        android:layout_weight="0.73" />
+        android:layout_height="300dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_alignParentTop="true"
+        android:id="@+id/fighterImageWrapper">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/fighterImage"
+            android:layout_weight="0.9"
+            android:src="@mipmap/sam"/>
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/loading"
+            android:layout_centerInParent="true"
+            android:visibility="visible"/>
+        </RelativeLayout>
 
     <TextView
         android:fontFamily="sans-serif-light"
@@ -19,6 +38,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/loading_next_fighter"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/fighterImageWrapper"
+        android:layout_marginBottom="30dp"
         android:id="@+id/browseMessage" />
 
     <LinearLayout
@@ -27,7 +50,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:weightSum="1"
-        android:gravity="center">
+        android:gravity="center"
+        android:layout_below="@+id/browseMessage">
 
         <Button
             android:fontFamily="sans-serif-light"
@@ -48,5 +72,4 @@
             android:background="@mipmap/xxhdpi_appicon"
             android:layout_weight="0.09" />
     </LinearLayout>
-
-</LinearLayout>
+</RelativeLayout>
