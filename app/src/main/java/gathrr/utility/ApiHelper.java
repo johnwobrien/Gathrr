@@ -75,7 +75,7 @@ public class ApiHelper {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
 
         String url = baseUrl + "reseed";
-        JSONObject json = JSONResponse.getJSONFromUrl(HttpType.POST, url, params);
+        JSONObject json = JSONResponse.getJSONFromUrl(HttpType.GET, url, params);
     }
 
 
