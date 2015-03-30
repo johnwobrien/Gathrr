@@ -16,6 +16,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.Filter;
 import android.widget.ImageView;
@@ -48,7 +51,7 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
     Button fight;
     Button dontFight;
     ProgressBar loading;
-    String userId = "user4";
+    String userId = "user1";
     String fighterId;
     JSONObject fighter;
     ImageView imgView;
@@ -152,8 +155,10 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                fight.setVisibility(View.INVISIBLE);
-                dontFight.setVisibility(View.INVISIBLE);
+                //fight.setVisibility(View.INVISIBLE);
+                //dontFight.setVisibility(View.INVISIBLE);
+                fight.setEnabled(false);
+                dontFight.setEnabled(false);
                 browseMessage.setText(R.string.loading_next_fighter);
                 imgView.setVisibility(View.INVISIBLE);
                 loading.setVisibility(View.VISIBLE);
@@ -168,6 +173,8 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
             public void run() {
                 fight.setVisibility(View.VISIBLE);
                 dontFight.setVisibility(View.VISIBLE);
+                fight.setEnabled(true);
+                dontFight.setEnabled(true);
             }
         });
 
@@ -207,6 +214,10 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
                 @Override
                 public void run() {
                     browseMessage.setText(R.string.waiting_next_fighter);
+                    fight.setVisibility(View.INVISIBLE);
+                    dontFight.setVisibility(View.INVISIBLE);
+                    fight.setEnabled(false);
+                    dontFight.setEnabled(false);
                 }
             });
 
@@ -322,6 +333,11 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
     class MyGestureDetector extends GestureDetector.SimpleOnGestureListener {
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            final Animation animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
+            animation.setDuration(500); // duration - half a second
+            animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
+            animation.setRepeatCount(2); // Repeat animation infinitely
+            animation.setRepeatMode(Animation.REVERSE); // Reverse animation at the end so the button will fade back in
             try {
                 if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
                     return false;
@@ -330,11 +346,15 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
                     Log.i(TAG, "onFling Left");
                     // These Toasts are here for Debug
                     //Toast.makeText(BrowseActivity.this, "Left Swipe", Toast.LENGTH_SHORT).show();
+                    final Button btn = (Button) findViewById(R.id.btnDontFight);
+                    btn.startAnimation(animation);
                     new DenyFight().execute();
                 }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     Log.i(TAG, "onFling Right");
                     // These Toasts are here for Debug
                     //Toast.makeText(BrowseActivity.this, "Right Swipe", Toast.LENGTH_SHORT).show();
+                    final Button btn = (Button) findViewById(R.id.btnFight);
+                    btn.startAnimation(animation);
                     new AcceptFight().execute();
                 }
             } catch (Exception e) {
