@@ -31,6 +31,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import gathrr.utility.ApiHelper;
 
@@ -51,6 +53,9 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
     JSONObject fighter;
     ImageView imgView;
     Bitmap bmp;
+
+    int timeout = 4000; // make the activity visible for 4 seconds
+    Timer timer = new Timer();
 
     // Variables for handling Gestures
     // Reference: http://stackoverflow.com/questions/937313/android-basic-gesture-detection
@@ -199,10 +204,21 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
         Log.i(TAG, "nextFighter");
         fighter = ApiHelper.getNextFighter(userId);
         if (fighter == null) {
-            finish();
-            Intent homepage = new Intent(BrowseActivity.this, NoFightersActivity.class);
-            startActivity(homepage);
-            return;
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    browseMessage.setText(R.string.waiting_next_fighter);
+                }
+            });
+
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            nextFighter();
+            return ;
         }
         loadingFighterDown(fighter);
     }
@@ -238,7 +254,6 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
         }
         setFighterImage(src);
     }
-
 
     //-----------------------------background actions-----------------------------------------------
 
