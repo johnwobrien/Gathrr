@@ -54,22 +54,19 @@
         android:layout_below="@+id/browseMessage">
 
         <Button
-            android:fontFamily="sans-serif-light"
-            android:background="@color/background_material_light"
-            android:layout_width="wrap_content"
-            android:layout_height="100dp"
-            android:text="@string/dont_fight"
+            android:layout_width="96dp"
+            android:layout_height="120dp"
             android:id="@+id/btnDontFight"
-            android:layout_weight="0.25"
             android:onClick="denyFight"
-            android:width="50dp" />
+            android:background="@mipmap/no_icon"
+            android:layout_weight="0.09" />
 
         <Button
             android:layout_width="96dp"
-            android:layout_height="match_parent"
+            android:layout_height="120dp"
             android:id="@+id/btnFight"
             android:onClick="acceptFight"
-            android:background="@mipmap/xxhdpi_appicon"
+            android:background="@mipmap/yes_icon"
             android:layout_weight="0.09" />
     </LinearLayout>
 </RelativeLayout>
