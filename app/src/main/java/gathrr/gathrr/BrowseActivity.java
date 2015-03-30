@@ -55,7 +55,6 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
     Bitmap bmp;
 
     int timeout = 4000; // make the activity visible for 4 seconds
-    Timer timer = new Timer();
 
     // Variables for handling Gestures
     // Reference: http://stackoverflow.com/questions/937313/android-basic-gesture-detection
@@ -212,7 +211,7 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
             });
 
             try {
-                Thread.sleep(4000);
+                Thread.sleep(timeout);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
