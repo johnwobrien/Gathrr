@@ -329,12 +329,12 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
                 if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     Log.i(TAG, "onFling Left");
                     // These Toasts are here for Debug
-                    Toast.makeText(BrowseActivity.this, "Left Swipe", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(BrowseActivity.this, "Left Swipe", Toast.LENGTH_SHORT).show();
                     new DenyFight().execute();
                 }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
                     Log.i(TAG, "onFling Right");
                     // These Toasts are here for Debug
-                    Toast.makeText(BrowseActivity.this, "Right Swipe", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(BrowseActivity.this, "Right Swipe", Toast.LENGTH_SHORT).show();
                     new AcceptFight().execute();
                 }
             } catch (Exception e) {
