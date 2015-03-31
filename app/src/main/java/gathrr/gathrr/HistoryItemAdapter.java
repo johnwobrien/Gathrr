@@ -45,7 +45,7 @@ public class HistoryItemAdapter extends BaseAdapter {
                 hist.Date = historyJSONItem.getString("Date");
                 hist.ELOChange = historyJSONItem.getString("ELOChange");
                 hist.Outcome = historyJSONItem.getString("Outcome");
-                history.add(hist);
+                historyList.add(hist);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

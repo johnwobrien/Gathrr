@@ -2,6 +2,7 @@ package gathrr.gathrr;
 
 import android.app.ListActivity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +24,7 @@ import gathrr.utility.ApiHelper;
 public class HistoryActivity extends ListActivity {
 
     private String userId = "user4";
+    ListView listview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,11 +34,10 @@ public class HistoryActivity extends ListActivity {
         }
         catch(Exception ex){ ex.printStackTrace();}
 
-        ListView listview = (ListView)findViewById(R.id.historylist);
-
-        JSONObject history = ApiHelper.getHistory(userId);
-        HistoryItemAdapter histAdapter = new HistoryItemAdapter(this, history);
-        listview.setAdapter(histAdapter);
+        listview = (ListView)findViewById(R.id.historylist);
+        CreateList task = new CreateList();
+        task.setActivity(this);
+        new Thread(task).start();
     }
 
 
@@ -62,6 +63,28 @@ public class HistoryActivity extends ListActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+
+    private class CreateList implements Runnable {
+        public HistoryActivity activity;
+        HistoryItemAdapter histAdapter;
+
+        public void setActivity(HistoryActivity a) {
+            this.activity = a;
+        }
+
+        @Override
+        public void run() {
+            JSONObject history = ApiHelper.getHistory(userId);
+            histAdapter = new HistoryItemAdapter(activity, history);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    listview.setAdapter(histAdapter);
+                }
+            });
         }
     }
 }
