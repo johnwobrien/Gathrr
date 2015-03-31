@@ -122,7 +122,8 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
                 startActivity(new Intent(this, AppPreferences.class));
                 return true;
             case R.id.action_history:
-                Log.d("menu","fight history");
+                Intent intent = new Intent(this, HistoryActivity.class);
+                this.startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

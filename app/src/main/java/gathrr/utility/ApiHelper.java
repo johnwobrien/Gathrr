@@ -78,6 +78,15 @@ public class ApiHelper {
         JSONObject json = JSONResponse.getJSONFromUrl(HttpType.GET, url, params);
     }
 
+    public static JSONObject getHistory(String id)
+    {
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("id", id));
+
+        String url = baseUrl + "history";
+        return JSONResponse.getJSONFromUrl(HttpType.GET, url, params);
+    }
+
 
 
 
