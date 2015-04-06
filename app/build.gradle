@@ -19,9 +19,14 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile files('lib/GathrrDBClient.jar')
     compile files('lib/mongo-java-driver-3.0.0-beta2.jar')
+    compile 'com.facebook.android:facebook-android-sdk:4.0.0'
 }
