@@ -9,4 +9,16 @@
         android:defaultValue="Male"
         android:entries="@array/genderArray"
         android:entryValues="@array/genderValues" />
+    <EditTextPreference android:title="@string/locationName"
+        android:key="locationName"
+        android:summary="Name your Fighting Grounds"></EditTextPreference>
+    <EditTextPreference android:title="@string/locationLong"
+        android:key="locationLong"
+        android:summary="Please provide longitude of Fighting Grounds"></EditTextPreference>
+    <EditTextPreference android:title="@string/locationLat"
+        android:key="locationLat"
+        android:summary="Please provide latitude of Fighting Grounds"></EditTextPreference>
+    <Preference android:title="@string/locationButton"
+        android:key="locationButton"
+        android:summary="Set Fighting Grounds to current location"></Preference>
 </PreferenceScreen>

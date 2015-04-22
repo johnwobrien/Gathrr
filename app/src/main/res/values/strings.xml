@@ -9,6 +9,10 @@
     <string name="fight">Fight!</string>
     <string name="dont_fight">Don\'t Fight</string>
     <string name="weight">Weight</string>
+    <string name="locationName">Fighting Grounds</string>
+    <string name="locationLong">Longitude</string>
+    <string name="locationLat">Latitude</string>
+    <string name="locationButton">Set Location to Current</string>
     <string name="gender">Gender</string>
     <string name="title_activity_no_fighters">NoFightersActivity</string>
     <string name="loading_next_fighter">Loading Next Fighter...</string>
