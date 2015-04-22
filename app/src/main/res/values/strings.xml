@@ -15,4 +15,5 @@
     <string name="waiting_next_fighter">Waiting For Fighters...</string>
     <string name="title_activity_history">History</string>
     <string name="title_activity_history_item">HistoryItem</string>
+    <string name="title_activity_notification">NotificationActivity</string>
 </resources>

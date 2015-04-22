@@ -31,6 +31,10 @@
             android:name=".HistoryItem"
             android:label="@string/title_activity_history_item" >
         </activity>
+        <activity
+            android:name=".NotificationsActivity"
+            android:label="@string/title_activity_notification" >
+        </activity>
     </application>
 
 </manifest>
