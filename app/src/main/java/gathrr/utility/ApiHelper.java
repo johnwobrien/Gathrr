@@ -87,6 +87,15 @@ public class ApiHelper {
         return JSONResponse.getJSONFromUrl(HttpType.GET, url, params);
     }
 
+    public static JSONObject getNotifications(String id)
+    {
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("id", id));
+
+        String url = baseUrl + "notifications";
+        return JSONResponse.getJSONFromUrl(HttpType.GET, url, params);
+    }
+
 
 
 
