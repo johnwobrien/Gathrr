@@ -11,7 +11,7 @@ import java.util.List;
 public class ApiHelper {
 
     private static String baseUrl = "http://fightr.herokuapp.com/api/";
-    //private static String baseUrl = "http://127.0.0.1:8080/api/";
+    //private static String baseUrl = "http://localhost:8080/api/";
 
     private static String TAG = "ApiHelper";
 
@@ -106,8 +106,7 @@ public class ApiHelper {
         params.add(new BasicNameValuePair("id", id));
 
         String url = baseUrl + "users";
-        JSONObject json = JSONResponse.getJSONFromUrl(httpType, url, params);
-        return json;
+        return JSONResponse.getJSONFromUrl(httpType, url, params);
     }
 
 

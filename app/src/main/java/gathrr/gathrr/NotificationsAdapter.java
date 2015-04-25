@@ -40,8 +40,8 @@ public class NotificationsAdapter extends BaseAdapter {
             key = it.next();
             not = new Notification();
             try {
-                not.Fighter = key;
                 notificationJSONItem = notificationsJSON.getJSONObject(key);
+                not.Fighter = key;
                 not.Date = notificationJSONItem.getString("Date");
                 notificationsList.add(not);
             } catch (JSONException e) {
@@ -72,7 +72,7 @@ public class NotificationsAdapter extends BaseAdapter {
         ItemViewHolder holder;
         LayoutInflater inflater = context.getLayoutInflater();
         if (convertView == null) {
-            convertView = inflater.inflate(R.layout.activity_history_item, null);
+            convertView = inflater.inflate(R.layout.activity_notification, null);
             holder = new ItemViewHolder();
             holder.notificationText = (TextView) convertView.findViewById(R.id.notificationText);
             holder.notificationDate = (TextView) convertView.findViewById(R.id.notificationDate);

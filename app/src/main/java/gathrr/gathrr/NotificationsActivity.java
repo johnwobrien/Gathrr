@@ -53,13 +53,19 @@ public class NotificationsActivity extends ListActivity {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
+        Intent intent;
         switch (item.getItemId()) {
             case R.id.action_settings:
                 Log.d("menu", "preferences");
                 startActivity(new Intent(this, AppPreferences.class));
                 return true;
             case R.id.action_history:
-                Log.d("menu","fight history");
+                intent = new Intent(this, HistoryActivity.class);
+                this.startActivity(intent);
+                return true;
+            case R.id.action_notifications:
+                intent = new Intent(this, NotificationsActivity.class);
+                this.startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

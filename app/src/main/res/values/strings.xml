@@ -5,6 +5,7 @@
 
     <string name="action_settings">Preferences</string>
     <string name="action_history">Fight History</string>
+    <string name="action_notifications">Notifications</string>
 
     <string name="fight">Fight!</string>
     <string name="dont_fight">Don\'t Fight</string>
@@ -19,5 +20,5 @@
     <string name="waiting_next_fighter">Waiting For Fighters...</string>
     <string name="title_activity_history">History</string>
     <string name="title_activity_history_item">HistoryItem</string>
-    <string name="title_activity_notification">NotificationActivity</string>
+    <string name="title_activity_notification">Notifications</string>
 </resources>
