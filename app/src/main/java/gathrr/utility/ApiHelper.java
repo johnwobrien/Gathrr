@@ -87,6 +87,11 @@ public class ApiHelper {
         return JSONResponse.getJSONFromUrl(HttpType.GET, url, params);
     }
 
+<<<<<<< HEAD
+    /*
+    registration
+     */
+=======
     public static JSONObject getNotifications(String id)
     {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -96,9 +101,27 @@ public class ApiHelper {
         return JSONResponse.getJSONFromUrl(HttpType.GET, url, params);
     }
 
+>>>>>>> b4c7ed28c313949a6ef1edd65ef0cec96489354c
 
 
 
+    /*
+    login
+    check if in db
+    if true, login
+    if not, fuck off
+     */
+    public static String checkUserInDB(String user, String pass) {
+    //TODO parse json here instead of activity
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("userID",user));
+        params.add(new BasicNameValuePair("password",pass));
+
+        String url = baseUrl + "login";
+        JSONObject json = JSONResponse.getJSONFromUrl(HttpType.GET, url, params);
+
+        return json.toString();
+    }
 
     private static JSONObject users(String id, HttpType httpType)
     {
