@@ -21,7 +21,7 @@ import java.util.Iterator;
 import gathrr.utility.ApiHelper;
 
 
-public class HistoryActivity extends ListActivity {
+public class NotificationsActivity extends ListActivity {
 
     private String userId = "user4";
     ListView listview;
@@ -74,21 +74,21 @@ public class HistoryActivity extends ListActivity {
 
 
     private class CreateList implements Runnable {
-        public HistoryActivity activity;
-        HistoryItemAdapter histAdapter;
+        public NotificationsActivity activity;
+        NotificationsAdapter notAdapter;
 
-        public void setActivity(HistoryActivity a) {
+        public void setActivity(NotificationsActivity a) {
             this.activity = a;
         }
 
         @Override
         public void run() {
-            JSONObject history = ApiHelper.getHistory(userId);
-            histAdapter = new HistoryItemAdapter(activity, history);
+            JSONObject notifications = ApiHelper.getNotifications(userId);
+            notAdapter = new NotificationsAdapter(activity, notifications);
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    listview.setAdapter(histAdapter);
+                    listview.setAdapter(notAdapter);
                 }
             });
         }

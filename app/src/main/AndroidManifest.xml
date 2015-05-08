@@ -45,6 +45,7 @@
             android:label="@string/title_activity_history_item" >
         </activity>
         <activity
+<<<<<<< HEAD
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
             android:windowSoftInputMode="adjustResize|stateVisible" >
@@ -63,6 +64,11 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+=======
+            android:name=".NotificationsActivity"
+            android:label="@string/title_activity_notification" >
+        </activity>
+>>>>>>> b4c7ed28c313949a6ef1edd65ef0cec96489354c
     </application>
 
 </manifest>

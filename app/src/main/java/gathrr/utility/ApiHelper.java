@@ -11,7 +11,7 @@ import java.util.List;
 public class ApiHelper {
 
     private static String baseUrl = "http://fightr.herokuapp.com/api/";
-    //private static String baseUrl = "http://127.0.0.1:8080/api/";
+    //private static String baseUrl = "http://localhost:8080/api/";
 
     private static String TAG = "ApiHelper";
 
@@ -87,9 +87,21 @@ public class ApiHelper {
         return JSONResponse.getJSONFromUrl(HttpType.GET, url, params);
     }
 
+<<<<<<< HEAD
     /*
     registration
      */
+=======
+    public static JSONObject getNotifications(String id)
+    {
+        List<NameValuePair> params = new ArrayList<NameValuePair>();
+        params.add(new BasicNameValuePair("id", id));
+
+        String url = baseUrl + "notifications";
+        return JSONResponse.getJSONFromUrl(HttpType.GET, url, params);
+    }
+
+>>>>>>> b4c7ed28c313949a6ef1edd65ef0cec96489354c
 
 
 
@@ -117,8 +129,7 @@ public class ApiHelper {
         params.add(new BasicNameValuePair("id", id));
 
         String url = baseUrl + "users";
-        JSONObject json = JSONResponse.getJSONFromUrl(httpType, url, params);
-        return json;
+        return JSONResponse.getJSONFromUrl(httpType, url, params);
     }
 
 

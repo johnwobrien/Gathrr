@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <resources>
     <string name="app_name">Gathrr</string>
 
@@ -35,3 +36,29 @@
     <string name="register_gender_prompt">Gender</string>
 
 </resources>
+=======
+<resources>
+    <string name="app_name">Gathrr</string>
+
+    <string name="hello_world">Hello world!</string>
+
+    <string name="action_settings">Preferences</string>
+    <string name="action_history">Fight History</string>
+    <string name="action_notifications">Notifications</string>
+
+    <string name="fight">Fight!</string>
+    <string name="dont_fight">Don\'t Fight</string>
+    <string name="weight">Weight</string>
+    <string name="locationName">Fighting Grounds</string>
+    <string name="locationLong">Longitude</string>
+    <string name="locationLat">Latitude</string>
+    <string name="locationButton">Set Location to Current</string>
+    <string name="gender">Gender</string>
+    <string name="title_activity_no_fighters">NoFightersActivity</string>
+    <string name="loading_next_fighter">Loading Next Fighter...</string>
+    <string name="waiting_next_fighter">Waiting For Fighters...</string>
+    <string name="title_activity_history">History</string>
+    <string name="title_activity_history_item">HistoryItem</string>
+    <string name="title_activity_notification">Notifications</string>
+</resources>
+>>>>>>> b4c7ed28c313949a6ef1edd65ef0cec96489354c
