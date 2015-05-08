@@ -30,14 +30,45 @@ public class AppPreferences extends PreferenceActivity implements Preference.OnP
             }
         });
         */
-
         addPreferencesFromResource(R.xml.preferences);
+        Preference locBtn= findPreference("locationButton");
+        locBtn.setOnPreferenceClickListener(this);
     }
 
     @Override
     public boolean onPreferenceClick(Preference preference){
         Log.i("Preferences", preference.getKey());
-        Toast.makeText(AppPreferences.this, "Set Location Coord", Toast.LENGTH_SHORT).show();
+
+        SharedPreferences latSet = getSharedPreferences("locationLat", MODE_PRIVATE);
+        SharedPreferences.Editor lat = latSet.edit();
+        lat.putString("locationLat", "EJs Lat");
+        lat.commit();
+
+        SharedPreferences lonSet = getSharedPreferences("locationLong", MODE_PRIVATE);
+        SharedPreferences.Editor lon = lonSet.edit();
+        lon.putString("locationLong", "EJs Lon");
+        Toast.makeText(AppPreferences.this, "Lat/Long set to your current location", Toast.LENGTH_SHORT).show();
+        lon.commit();
+
+        /*
+        Preference lat = findPreference("locationLat");
+        Preference lon = findPreference("locationLong");
+        if (lat != null && lon != null) {
+            //lat.setSummary("EJ set this lat");
+            //lon.setSummary("EJ also set this long");
+            SharedPreferences.Editor latEditor = lat.getEditor();
+            SharedPreferences.Editor lonEditor = lon.getEditor();
+            latEditor.putString("locationLat","EJ Lat");
+            lonEditor.putString("locationLong","EJ Lon");
+            latEditor.commit();
+            lonEditor.commit();
+            Toast.makeText(AppPreferences.this, "Lat/Long set to your current location", Toast.LENGTH_SHORT).show();
+        }
+        else
+        {
+            Toast.makeText(AppPreferences.this, "Error trying to get current location", Toast.LENGTH_SHORT).show();
+        }
+        */
         return true;
     }
 
