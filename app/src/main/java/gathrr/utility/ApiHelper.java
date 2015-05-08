@@ -87,11 +87,6 @@ public class ApiHelper {
         return JSONResponse.getJSONFromUrl(HttpType.GET, url, params);
     }
 
-<<<<<<< HEAD
-    /*
-    registration
-     */
-=======
     public static JSONObject getNotifications(String id)
     {
         List<NameValuePair> params = new ArrayList<NameValuePair>();
@@ -100,9 +95,6 @@ public class ApiHelper {
         String url = baseUrl + "notifications";
         return JSONResponse.getJSONFromUrl(HttpType.GET, url, params);
     }
-
->>>>>>> b4c7ed28c313949a6ef1edd65ef0cec96489354c
-
 
 
     /*
@@ -131,7 +123,4 @@ public class ApiHelper {
         String url = baseUrl + "users";
         return JSONResponse.getJSONFromUrl(httpType, url, params);
     }
-
-
-
 }
