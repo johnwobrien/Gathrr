@@ -19,6 +19,7 @@ import org.json.JSONObject;
 import java.util.Iterator;
 
 import gathrr.utility.ApiHelper;
+import gathrr.utility.User;
 
 
 public class HistoryActivity extends ListActivity {
@@ -29,7 +30,7 @@ public class HistoryActivity extends ListActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        userId = getIntent().getStringExtra("userID");
+        userId = User.User;
 
         try {
             setContentView(R.layout.activity_history);
@@ -67,6 +68,11 @@ public class HistoryActivity extends ListActivity {
                 return true;
             case R.id.action_notifications:
                 intent = new Intent(this, NotificationsActivity.class);
+                this.startActivity(intent);
+                return true;
+            case R.id.signout:
+                intent = new Intent(this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 this.startActivity(intent);
                 return true;
             default:

@@ -38,6 +38,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import gathrr.utility.ApiHelper;
+import gathrr.utility.User;
 
 /**
  * Created by Andrew on 2/25/2015.
@@ -48,6 +49,7 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
 
     ImageView fighterImage;
     TextView browseMessage;
+    TextView username;
     Button fight;
     Button dontFight;
     ProgressBar loading;
@@ -69,9 +71,8 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        userId = User.User;
 
-        Bundle extras = this.getIntent().getExtras();
-        userId = extras.getString("userID");
         //init
         super.onCreate(savedInstanceState);
         setContentView(R.layout.browse);
@@ -82,6 +83,8 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
         fight = (Button) findViewById(R.id.btnFight);
         dontFight = (Button) findViewById(R.id.btnDontFight);
         loading = (ProgressBar) findViewById(R.id.loading);
+        username = (TextView) findViewById(R.id.username);
+        username.setText(userId);
 
         //load the fighter
         loadingFighterUp();
@@ -124,17 +127,19 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
             case R.id.action_settings:
                 Log.d("menu", "preferences");
                 intent = new Intent(this, AppPreferences.class);
-                intent.putExtra("userID",userId);
                 startActivity(intent);
                 return true;
             case R.id.action_history:
                 intent = new Intent(this, HistoryActivity.class);
-                intent.putExtra("userID",userId);
                 this.startActivity(intent);
                 return true;
             case R.id.action_notifications:
                 intent = new Intent(this, NotificationsActivity.class);
-                intent.putExtra("userID",userId);
+                this.startActivity(intent);
+                return true;
+            case R.id.signout:
+                intent = new Intent(this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 this.startActivity(intent);
                 return true;
             default:

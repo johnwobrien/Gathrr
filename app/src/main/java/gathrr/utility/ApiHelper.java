@@ -106,11 +106,11 @@ public class ApiHelper {
     public static String checkUserInDB(String user, String pass) {
     //TODO parse json here instead of activity
         List<NameValuePair> params = new ArrayList<NameValuePair>();
-        params.add(new BasicNameValuePair("userID",user));
+        params.add(new BasicNameValuePair("id",user));
         params.add(new BasicNameValuePair("password",pass));
 
         String url = baseUrl + "login";
-        JSONObject json = JSONResponse.getJSONFromUrl(HttpType.GET, url, params);
+        JSONObject json = JSONResponse.getJSONFromUrl(HttpType.POST, url, params);
 
         return json.toString();
     }
