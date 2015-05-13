@@ -1,6 +1,7 @@
 package gathrr.gathrr;
 
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
@@ -8,17 +9,21 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import gathrr.utility.ApiHelper;
+
 /**
  * Created by jshippling on 2/27/15.
  */
 
 public class AppPreferences extends PreferenceActivity implements Preference.OnPreferenceClickListener {
 
+    private String userID;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userID = getIntent().getStringExtra("userID");
 
-        setDefaults();
         //this is deprecated but i don't really give a heck
         /*
         Preference button = (Preference)findPreference(getString(R.string.locationButton));
@@ -33,6 +38,7 @@ public class AppPreferences extends PreferenceActivity implements Preference.OnP
         addPreferencesFromResource(R.xml.preferences);
         Preference locBtn= findPreference("locationButton");
         locBtn.setOnPreferenceClickListener(this);
+        setDefaults();
     }
 
     @Override
@@ -75,17 +81,24 @@ public class AppPreferences extends PreferenceActivity implements Preference.OnP
     private void setDefaults(){
         SharedPreferences.Editor p = PreferenceManager.getDefaultSharedPreferences(this).edit();
 
+//        Log.d("preferences",ApiHelper.getUser("5552a99c9caa731100000251").toString());
+
         // set weight and gender from database
-        String weight = "123";
-        String gender = "Other";
+        String weight = "155";
+        String gender = "Male";
 
         p.putString("weight", weight);
         p.putString("gender",gender);
         p.commit();
     }
+    private class SetDefaults extends AsyncTask<Void,Void,Void>
+    {
+        @Override
+        protected Void doInBackground(Void... params)
+        {
+            setDefaults();
 
-
-
-
-
+            return null;
+        }
+    }
 }

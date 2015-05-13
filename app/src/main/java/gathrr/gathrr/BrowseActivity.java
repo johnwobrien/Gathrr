@@ -51,7 +51,7 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
     Button fight;
     Button dontFight;
     ProgressBar loading;
-    String userId = "user1";
+    String userId;
     String fighterId;
     JSONObject fighter;
     ImageView imgView;
@@ -69,6 +69,9 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        Bundle extras = this.getIntent().getExtras();
+        userId = extras.getString("userID");
         //init
         super.onCreate(savedInstanceState);
         setContentView(R.layout.browse);
@@ -120,14 +123,18 @@ public class BrowseActivity extends ActionBarActivity implements View.OnClickLis
         switch (item.getItemId()) {
             case R.id.action_settings:
                 Log.d("menu", "preferences");
-                startActivity(new Intent(this, AppPreferences.class));
+                intent = new Intent(this, AppPreferences.class);
+                intent.putExtra("userID",userId);
+                startActivity(intent);
                 return true;
             case R.id.action_history:
                 intent = new Intent(this, HistoryActivity.class);
+                intent.putExtra("userID",userId);
                 this.startActivity(intent);
                 return true;
             case R.id.action_notifications:
                 intent = new Intent(this, NotificationsActivity.class);
+                intent.putExtra("userID",userId);
                 this.startActivity(intent);
                 return true;
             default:

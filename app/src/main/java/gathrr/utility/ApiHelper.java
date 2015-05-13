@@ -101,7 +101,7 @@ public class ApiHelper {
     login
     check if in db
     if true, login
-    if not, fuck off
+    if not, return false
      */
     public static String checkUserInDB(String user, String pass) {
     //TODO parse json here instead of activity

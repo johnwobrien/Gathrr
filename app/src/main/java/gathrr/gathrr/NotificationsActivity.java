@@ -23,11 +23,13 @@ import gathrr.utility.ApiHelper;
 
 public class NotificationsActivity extends ListActivity {
 
-    private String userId = "user4";
+    private String userId;
     ListView listview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        userId = getIntent().getStringExtra("userID");
+
         super.onCreate(savedInstanceState);
         try {
             setContentView(R.layout.activity_history);

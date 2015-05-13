@@ -18,6 +18,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -88,6 +89,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
                 attemptLogin();
             }
         });
+
         Button registerButton = (Button) findViewById(R.id.register_button);
         registerButton.setOnClickListener(new OnClickListener() {
             public void onClick(View v) {
@@ -159,7 +161,8 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+//        return email.contains("@");
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
@@ -295,19 +298,20 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-
-            try {
-//                SHA1(mEmail + mPassword);
-                if(ApiHelper.checkUserInDB(mEmail,mPassword).contains("false")) {
-                    return false;
-                } else {
-                    return true;
-                }
-
-            } catch (Exception e) {
-                return false;
-            }
-
+//            try {
+////                SHA1(mEmail + mPassword);
+//                String response = ApiHelper.checkUserInDB(mEmail,mPassword);
+//                Log.d("response",response);
+//                if(ApiHelper.checkUserInDB(mEmail,mPassword).contains("false")) {
+//                    return false;
+//                } else {
+//                    return true;
+//                }
+//
+//            } catch (Exception e) {
+//                Log.d("error",e.getMessage());
+//                return false;
+//            }
 //            try {
 //                // Simulate network access.
 //                Thread.sleep(2000);
@@ -324,7 +328,7 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
 //            }
 
             // TODO: register the new account here.
-//            return true;
+            return true;
         }
 
         @Override
@@ -333,7 +337,9 @@ public class LoginActivity extends Activity implements LoaderCallbacks<Cursor> {
             showProgress(false);
 
             if (success) {
-                startActivity(new Intent(getApplicationContext(), BrowseActivity.class));
+                Intent intent = new Intent(getApplicationContext(), BrowseActivity.class);
+                intent.putExtra("userID",mEmail);
+                startActivity(intent);
 
             } else {
                 mPasswordView.setError(getString(R.string.error_incorrect_password));

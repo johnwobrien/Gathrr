@@ -23,12 +23,14 @@ import gathrr.utility.ApiHelper;
 
 public class HistoryActivity extends ListActivity {
 
-    private String userId = "user4";
+    private String userId;
     ListView listview;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        userId = getIntent().getStringExtra("userID");
+
         try {
             setContentView(R.layout.activity_history);
         }
